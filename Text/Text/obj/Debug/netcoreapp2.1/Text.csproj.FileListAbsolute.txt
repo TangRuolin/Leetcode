@@ -1,0 +1,11 @@
+F:\ruolinTang\Project\GitProject\Text\Text\bin\Debug\netcoreapp2.1\Text.deps.json
+F:\ruolinTang\Project\GitProject\Text\Text\bin\Debug\netcoreapp2.1\Text.runtimeconfig.json
+F:\ruolinTang\Project\GitProject\Text\Text\bin\Debug\netcoreapp2.1\Text.runtimeconfig.dev.json
+F:\ruolinTang\Project\GitProject\Text\Text\bin\Debug\netcoreapp2.1\Text.dll
+F:\ruolinTang\Project\GitProject\Text\Text\bin\Debug\netcoreapp2.1\Text.pdb
+F:\ruolinTang\Project\GitProject\Text\Text\obj\Debug\netcoreapp2.1\Text.csprojAssemblyReference.cache
+F:\ruolinTang\Project\GitProject\Text\Text\obj\Debug\netcoreapp2.1\Text.csproj.CoreCompileInputs.cache
+F:\ruolinTang\Project\GitProject\Text\Text\obj\Debug\netcoreapp2.1\Text.AssemblyInfoInputs.cache
+F:\ruolinTang\Project\GitProject\Text\Text\obj\Debug\netcoreapp2.1\Text.AssemblyInfo.cs
+F:\ruolinTang\Project\GitProject\Text\Text\obj\Debug\netcoreapp2.1\Text.dll
+F:\ruolinTang\Project\GitProject\Text\Text\obj\Debug\netcoreapp2.1\Text.pdb
