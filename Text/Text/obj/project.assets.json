@@ -694,11 +694,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\ruolinTang\\Project\\GitProject\\Text\\Text\\Text.csproj",
+      "projectUniqueName": "F:\\ruolinTang\\Project\\GitProject\\Leetcode\\Text\\Text\\Text.csproj",
       "projectName": "Text",
-      "projectPath": "F:\\ruolinTang\\Project\\GitProject\\Text\\Text\\Text.csproj",
+      "projectPath": "F:\\ruolinTang\\Project\\GitProject\\Leetcode\\Text\\Text\\Text.csproj",
       "packagesPath": "C:\\Users\\tangruolin.LONGTU-SZ\\.nuget\\packages\\",
-      "outputPath": "F:\\ruolinTang\\Project\\GitProject\\Text\\Text\\obj\\",
+      "outputPath": "F:\\ruolinTang\\Project\\GitProject\\Leetcode\\Text\\Text\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

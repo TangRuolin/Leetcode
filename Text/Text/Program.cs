@@ -7,9 +7,9 @@ namespace Text
     {
         static void Main(string[] args)
         {
-            uint x = 43261596;
-            uint y = reverseBits(x);
-            Console.WriteLine(y);
+            ListNode l1 = new ListNode(1);
+            ListNode l2 = new ListNode(2);
+            ListNode l3 = AddTwoNumbers(l1,l2);
             Console.ReadKey();
         }
         #region 求两数和
@@ -28,6 +28,7 @@ namespace Text
             return null;
         }
         #endregion
+
         #region 32位有符号整数反转
         static public int Revere(int x)
         {
@@ -73,12 +74,48 @@ namespace Text
             
         }
         #endregion
-        #region 颠倒二进制符号数
-        static public uint reverseBits(uint n)
-        {
 
-           
+        #region 颠倒二进制符号数
+        //static public uint reverseBits(uint n)
+        //{
+
+
+        //}
+        #endregion
+
+        #region  回文数
+        static public bool IsPalindrome(int x)
+        {
+            if (x < 0) return false;
+            char[] xChars = x.ToString().ToCharArray();
+            for(int i = 0; i < xChars.Length/2; i++)
+            {
+                if (xChars[i] != xChars[xChars.Length - 1 - i]) return false;
+            }
+            return true;
         }
         #endregion
+
+        #region 两数相加
+        public class ListNode
+        {
+             public int val;
+             public ListNode next;
+             public ListNode(int x) { val = x; }
+         }
+        static public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
+        {
+            ListNode result = new ListNode(0);
+            int addInNext= 0;
+            return result;
+
+        }
+        public ListNode AddTowNumbersRecur(ListNode l, ListNode l1,ListNode l2,int carry)
+        {
+
+        }
+        #endregion
+
+
     }
 }
