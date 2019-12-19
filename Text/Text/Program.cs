@@ -9,7 +9,8 @@ namespace Text
         static void Main(string[] args)
         {
             //string a = "23";
-            IList<string> a = GenerateParenthesis(3);
+            int[] a = new int[3] { 1,3,2};
+            NextPermutation(a);
             Console.ReadKey();
         }
         #region 题目中用到的节点（ListNode）
@@ -652,7 +653,7 @@ namespace Text
         public int Search(int[] nums, int target)
         {
             if (nums == null || nums.Length == 0) return -1;
-            int min = 0, max = nums.Length;
+            int min = 0, max = nums.Length-1;
             int mid;
             while(min <= max)
             {
@@ -660,14 +661,69 @@ namespace Text
                 if (nums[mid] == target) return mid;
                 if (nums[min] <= nums[mid])//前半部分有序
                 {
-                   
+                   if(nums[mid] >= target && nums[min] < target)
+                    {
+                        max = mid - 1 ;
+                    }
+                    else
+                    {
+                        min =mid+1;
+                    }
                 }
                 else  //后半部分有序
                 {
-
+                    if(nums[mid]<target && nums[max] >= target)
+                    {
+                        min = mid + 1;
+                    }
+                    else
+                    {
+                        max = mid - 1 ;
+                    }
                 }
             }
             return -1;
+        }
+        #endregion
+
+        #region 下一个排列
+        public static void NextPermutation(int[] nums)
+        {
+            int temp;
+            for (int i = nums.Length - 1; i >= 0; i--)
+            {
+                if(i == 0)
+                {
+                    for(int j = 0; j < nums.Length/2; j++)
+                    {
+                        temp = nums[j];
+                        nums[j] = nums[nums.Length - 1 - j];
+                        nums[nums.Length - 1 - j] = temp;
+                    }
+                    return;
+                }
+                if (nums[i] > nums[i - 1])
+                {
+                    for(int j = i; j < (nums.Length + i)/2; j++)
+                    {
+                        temp = nums[j];
+                        nums[j] = nums[nums.Length + i - j-1];
+                        nums[nums.Length + i - j - 1] = temp;
+                    } 
+                    for(int j = i; j < nums.Length; j++)
+                    {
+                        if (nums[j] > nums[i - 1])
+                        {
+                            temp = nums[j];
+                            nums[j] = nums[i - 1];
+                            nums[i - 1] = temp;
+                            break;
+                        }
+                    }
+                    return;
+                }
+            }
+            
         }
         #endregion
     }
