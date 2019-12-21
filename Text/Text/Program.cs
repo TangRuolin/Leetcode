@@ -9,7 +9,8 @@ namespace Text
         static void Main(string[] args)
         {
             //string a = "23";
-            int[] a = new int[3] { 1,3,2};
+            int[] a = new int[9] { 1,2,3,3,3,3,4,5,9};
+            int[] b = SearchRange(a, 3);
             NextPermutation(a);
             Console.ReadKey();
         }
@@ -724,6 +725,83 @@ namespace Text
                 }
             }
             
+        }
+        #endregion
+
+        #region 在排序数组中查找元素的第一个和最后一个位置
+        public static int[] SearchRange(int[] nums, int target)
+        {
+            int min = 0, max = nums.Length-1;
+            int mid;
+            int resultMin = -1, resultMax = -1;
+            if(nums.Length == 0) return new int[] { resultMin, resultMax };
+            while (min <= max)
+            {
+                mid = (min + max) / 2;
+                if (nums[mid] > target) max = mid - 1;
+                else if (nums[mid] < target) min = mid + 1;
+                else
+                {
+                    int midx;
+                    int maxx = mid;
+                    while (min <= maxx)
+                    {
+                        midx = (min + maxx) / 2;
+
+                        if ( (nums[midx] == target && midx == 0)||(nums[midx] == target && midx > 0 && nums[midx - 1] < target))
+                        {
+                            resultMin = midx;
+                            break;
+                        }
+                        else if (nums[midx] < target) min = midx + 1;
+                        else
+                        {
+                            maxx = midx - 1;
+                        }
+                    }
+                    while(mid <= max)
+                    {
+                        midx = (mid + max) / 2;
+                        if ((nums[midx] == target && midx == nums.Length-1) || (nums[midx] == target && midx < nums.Length - 1&&nums[midx + 1] > target))
+                        {
+                            resultMax = midx;
+                            break;
+                        }
+                        else if (nums[midx] > target) max = midx - 1;
+                        else
+                        {
+                            mid = midx + 1;
+                        }
+                    }
+                    break;
+                }
+            }
+            return new int[] { resultMin, resultMax };
+        }
+        #endregion
+
+        #region 搜索插入数据
+        public int SearchInsert(int[] nums, int target)
+        {
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] >= target)
+                {
+                    if (i == 0) return 0;
+                    if (nums[i - 1] <= target)
+                    {
+                        return i;
+                    }
+                }
+            }
+            return nums.Length;
+        }
+        #endregion
+
+        #region 有效的数独
+        public bool IsValidSudoku(char[][] board)
+        {
+
         }
         #endregion
     }
