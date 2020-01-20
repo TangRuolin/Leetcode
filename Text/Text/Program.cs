@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 
 namespace Text
 {
@@ -9,10 +10,9 @@ namespace Text
         static void Main(string[] args)
         {
             //string a = "23";
-            int[] a = new int[9] { 1,2,3,3,3,3,4,5,9};
-            int[] b = SearchRange(a, 3);
-            NextPermutation(a);
-            Console.ReadKey();
+            string a = GetPermutation(3, 2);
+            Console.WriteLine("最终结果："+a);
+           
         }
         #region 题目中用到的节点（ListNode）
         public class ListNode
@@ -798,11 +798,445 @@ namespace Text
         }
         #endregion
 
-        #region 有效的数独
-        public bool IsValidSudoku(char[][] board)
+        #region 外观数列
+        public static string CountAndSay(int n)
         {
+            string result = "1";
+            if (n == 1) return result;
+            int num = 2;
+            while(num <= n)
+            {
+                char[] reChar = result.ToArray();
+                int count = 0;
+                char number = reChar[0];
+                result = "";
+                for(int i = 0; i < reChar.Length; i++)
+                {
+                    if(reChar[i] == number)
+                    {
+                        count++;
+                    }
+                    else
+                    {
+                        result += count.ToString() + number.ToString();
+                        number = reChar[i];
+                        count = 1;
+                    }
+                }
+                result = result + count.ToString() + number;
+
+                num++;
+            }
+            return result;
+        }
+        #endregion
+
+        #region 读取xml方法
+        /// <summary>
+        /// 从xml文件中获取对应tag的值（int类型）
+        /// </summary>
+        /// <param name="tag"></param>标签名字
+        /// <param name="defaultValue"></param>默认值
+        /// <returns></returns>
+        static int GetXmlNodeInt(string tag, int defaultValue)
+        {
+            XmlDocument xml_file = new XmlDocument();
+            xml_file.LoadXml("具体的地址");
+            var val = xml_file.GetElementsByTagName(tag);
+            if (val == null || val.Count <= 0) return defaultValue;
+            int outValue;
+            if(int.TryParse(val[0].InnerText,out outValue))
+            {
+                return outValue;
+            }
+            return defaultValue;
+        }
+        /// <summary>
+        /// 从xml文件中读取对于tag的值（string类型）
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        static string GetXmlNodeString(string tag,string defaultValue)
+        {
+            XmlDocument xml_file = new XmlDocument();
+            xml_file.LoadXml("具体的地址");
+            var val = xml_file.GetElementsByTagName(tag);
+            if(val == null || val.Count <= 0)
+            {
+                return defaultValue;
+            }
+            return val[0].InnerText;
+        }
+        #endregion
+
+        #region 组合总和（没解决）
+        //public IList<IList<int>> CombinationSum(int[] candidates, int target)
+        //{
+
+        //}
+        #endregion
+
+        #region 最大子序和(时间复杂度为O(n))
+        public static int MaxSubArray(int[] nums)
+        {
+            int result = nums[0];
+            int sum = 0;
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if(sum > 0)
+                {
+                    sum += nums[i];
+                }
+                else
+                {
+                    sum = nums[i];
+                }
+                if (sum > result)
+                {
+                    result = sum;
+                }
+            }
+            return result;
+        }
+        #endregion
+
+        #region 跳跃游戏
+        public static bool CanJump(int[] nums)
+        {
+            int last = nums.Length-1;
+            for(int i = nums.Length - 2; i >= 0; i--)
+            {
+                if (last - i <= nums[i]) last = i;
+            }
+           
+            return last == 0;
+        }
+        #endregion
+
+        #region 螺旋矩阵
+        public IList<int> SpiralOrder(int[][] matrix)
+        {
+            List<int> result = new List<int>();
+            if (matrix.Length == 0) return result;
+            int r1 = 0, r2 = matrix[0].Length-1, c1 = 0, c2 = matrix.Length-1;
+            while (r1 <= r2 && c1 <= c2)
+            {
+                for (int i = r1; i <= r2; i++) result.Add(matrix[c1][i]);
+                for (int i = c1+1; i <= c2; i++) result.Add(matrix[i][r2]);
+                if(c1 != c2)
+                    for (int i = r2 - 1; i >= r1; i--) result.Add(matrix[c2][i]);
+                if(r1!=r2)
+                    for (int i = c2 - 1; i > c1; i--) result.Add(matrix[i][r1]);
+                r1++;
+                r2--;
+                c1++;
+                c2--;
+            }
+            return result;
+        }
+        #endregion
+
+        #region 合并区间
+        public int[][] Merge(int[][] intervals)
+        {
+            List<int[]> result = new List<int[]>();
+            if (intervals.Length == 0) return result.ToArray();
+            for(int i = 0; i < intervals.Length-1; i++)
+            {
+                for(int j = i + 1; j < intervals.Length; j++)
+                {
+                    if (intervals[i][0] > intervals[j][0])
+                    {
+                        int[] temp = intervals[i];
+                        intervals[i] = intervals[j];
+                        intervals[j] = temp;
+                    }
+                }
+            }
+           // bool[] tag = new bool[intervals.Length];
+            int[] n = intervals[0];
+            for (int i = 1; i < intervals.Length; i++)
+            {
+               if(n[1] >= intervals[i][0])
+                {
+                    if (n[0] > intervals[i ][0]) n[0] = intervals[i][0];
+                    if (n[1] < intervals[i][1]) n[1] = intervals[i][1];
+                }
+                else
+                {
+                    result.Add(n);
+                    n = intervals[i];
+                }
+            }
+            result.Add(n);
+            return result.ToArray();
+        }
+        #endregion
+
+        #region 最后一个单词的长度
+        public static int LengthOfLastWord(string s)
+        {
+            char[] sChar = s.ToCharArray();
+            int n = 0;
+            for(int i = sChar.Length - 1; i >= 0; i--)
+            {
+                if (sChar[i] == ' ')
+                {
+                    if (n != 0) return n;
+                    continue;
+                }
+                n++;
+            }
+            return n;
+        }
+        #endregion
+
+        #region 螺旋矩阵2
+        public int[][] GenerateMatrix(int n)
+        {
+            int[][] result = new int[n][];
+            if (n == 0)
+            {
+                return result;
+            } 
+            int r1 = 0, r2 = n - 1, c1 = 0, c2 = n - 1;
+            int number = 1;
+            while(r2 >= r1 && c2 >= c1)
+            {
+                for(int i = r1;i<=r2;i++)
+                {
+                    if (result[c1] == null) result[c1] = new int[n];
+                    result[c1][i] = number;
+                    number++;
+                }
+                for(int i = c1 + 1; i <= c2; i++)
+                {
+                    if (result[i] == null) result[i] = new int[n];
+                    result[i][r2] = number;
+                    number++;
+                }
+                if (c1 != c2)
+                {
+                    for(int i = r2 - 1; i >= r1; i--)
+                    {
+                        result[c2][i] = number;
+                        number++;
+                    }
+                }
+                if(r1 != r2)
+                {
+                    for(int i = c2 - 1; i > c1; i--)
+                    {
+                        result[i][r1] = number;
+                        number++;
+                    }
+                }
+                r1++;
+                r2--;
+                c1++;
+                c2--;
+            }
+            return result;
+        }
+        #endregion
+
+        #region 全排列 
+        public static IList<IList<int>> resultPermute;
+        public static IList<IList<int>> Permute(int[] nums)
+        {
+            IList<int> num = new List<int>();
+            PermuteLoop(num,nums.ToList());
+            return resultPermute;
+        }
+        public static void PermuteLoop(IList<int> nums,List<int> choose)
+        {
+            if (choose.Count == 0)
+            {
+                if(resultPermute == null)
+                {
+                    resultPermute = new List<IList<int>>();
+                }
+                IList<int> result = new List<int>();
+                foreach(int i in nums)
+                {
+                    result.Add(i);
+                }
+                resultPermute.Add(result);
+            }
+            for(int i = 0; i < choose.Count; i++)
+            {
+                nums.Add(choose[i]);
+                int num = choose[i];
+                choose.RemoveAt(i);
+                PermuteLoop(nums,choose);
+                choose.Insert(i,num);
+                nums.Remove(choose[i]);
+            }
+        }
+        #endregion
+
+        #region 全排列2
+        static IList<IList<int>> resultPermuteUnique = new List<IList<int>>();
+        public static IList<IList<int>> PermuteUnique(int[] nums)
+        {
+            IList<int> num = new List<int>();
+            PermuteUniqueLoop(num,nums.ToList());
+            return resultPermuteUnique;
+        }
+        public static void PermuteUniqueLoop(IList<int> num,List<int> choose)
+        {
+            if(choose.Count == 0)
+            {
+                IList<int> result = new List<int>();
+                foreach(int i in num)
+                {
+                    result.Add(i);
+                }
+                resultPermuteUnique.Add(result);
+            }
+            List<int> hasAddList = new List<int>();
+            for(int i = 0; i < choose.Count; i++)
+            {
+                bool hasAdd = false;
+                foreach (int n in hasAddList)
+                {
+                    if(choose[i] == n)
+                    {
+                        hasAdd = true;
+                        break;
+                    }
+                }
+                if (hasAdd) continue;
+                num.Add(choose[i]);
+                int temp = choose[i];
+                choose.RemoveAt(i);
+                PermuteUniqueLoop(num, choose);
+                choose.Insert(i,temp);
+                num.RemoveAt(num.Count-1);
+                hasAddList.Add(choose[i]);
+            }
+        }
+        #endregion
+
+        #region 旋转图像
+        public void Rotate(int[][] matrix)
+        {
+            if (matrix.Length == 0) return;
+            for(int i = 0; i < matrix.Length-1; i++)
+            {
+                for(int j = i+1; j < matrix.Length; j++)
+                {
+                    int temp = matrix[i][j];
+                    matrix[i][j] = matrix[j][i];
+                    matrix[j][i] = temp;
+                }
+            }
+            int middle = matrix.Length / 2;
+            for(int i = 0; i < matrix.Length; i++)
+            {
+                for(int j = 0; j < middle; j++)
+                {
+                    int temp = matrix[i][j];
+                    matrix[i][j] = matrix[i][matrix.Length - j - 1];
+                    matrix[i][matrix.Length - j - 1] = temp;
+                }
+            }
+        }
+        #endregion
+
+        #region 字母异位词分组
+        public IList<IList<string>> GroupAnagrams(string[] strs)
+        {
+            IList<IList<string>> result = new List<IList<string>>();
+            Dictionary<string, IList<string>> map = new Dictionary<string, IList<string>>();
+            for(int i = 0; i < strs.Length; i++)
+            {
+                char[] a = strs[i].ToCharArray();
+                Array.Sort(a);
+                string key = string.Join("",a);
+                if (map.ContainsKey(key))
+                {
+                    map[key].Add(strs[i]);
+                    continue;
+                }
+                IList<string> list = new List<string>();
+                list.Add(strs[i]);
+                map.Add(key, list);
+            }
+            foreach(var i in map)
+            {
+                result.Add(i.Value);
+            }
+            return result;
+        }
+
+        #endregion
+
+        #region 找出第k个排列
+        public string permutationResult = null;
+        public int index = 0;
+
+        public string GetPermutation(int n, int k)
+        {
+            if (k == 0) return permutationResult;
+            int[] number = new int[n];
+            int everyGroupNum = 1;
+            for(int i = 0; i < n; i++)
+            {
+                number[i] = i + 1;
+                if(i != 0)
+                    everyGroupNum *= i;
+            }
+            if (k == 1) return string.Join("",number);
+            int startGroup = (k / everyGroupNum) + 1; 
+            index = k % everyGroupNum;
+            if (everyGroupNum == 1)
+            {
+                index = 1;
+                startGroup--;
+            }
+            if(index == 0)
+            {
+                startGroup--;
+            }
+            List<int> result = new List<int>();
+            result.Add(startGroup);
+            List<int> residue = number.ToList();
+            residue.Remove(startGroup);
+            GetPermutationLoop(result, residue);
+            return permutationResult;
 
         }
+        public void GetPermutationLoop(List<int> result,List<int> residue)
+        {
+            if(residue.Count == 0)
+            {
+                if(index == 1)
+                {
+                    permutationResult = string.Join("", result.ToArray());
+                }
+                else
+                {
+                    index--;
+                }
+                return;
+            }
+            for(int i = 0; i < residue.Count; i++)
+            {
+                result.Add(residue[i]);
+                int temp = residue[i];
+                residue.RemoveAt(i);
+                GetPermutationLoop(result, residue);
+                if (permutationResult != null)
+                {
+                    return;
+                }
+                result.RemoveAt(result.Count-1);
+                residue.Insert(i, temp);
+            }
+
+        } 
         #endregion
     }
 }
