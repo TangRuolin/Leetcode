@@ -1174,10 +1174,10 @@ namespace Text
         #endregion
 
         #region 找出第k个排列
-        public string permutationResult = null;
-        public int index = 0;
+        public static string permutationResult = null;
+        public static int index = 0;
 
-        public string GetPermutation(int n, int k)
+        public static string GetPermutation(int n, int k)
         {
             if (k == 0) return permutationResult;
             int[] number = new int[n];
@@ -1198,6 +1198,7 @@ namespace Text
             }
             if(index == 0)
             {
+                index = everyGroupNum;
                 startGroup--;
             }
             List<int> result = new List<int>();
@@ -1208,7 +1209,7 @@ namespace Text
             return permutationResult;
 
         }
-        public void GetPermutationLoop(List<int> result,List<int> residue)
+        public static void GetPermutationLoop(List<int> result,List<int> residue)
         {
             if(residue.Count == 0)
             {
@@ -1236,7 +1237,76 @@ namespace Text
                 residue.Insert(i, temp);
             }
 
-        } 
+        }
+        #endregion
+
+        #region 插入区间 
+        public int[][] Insert(int[][] intervals, int[] newInterval)
+        {
+            List<int[]> result = new List<int[]>();
+            bool hasAdd = false;
+            int[] resultItem = null;
+            for(int i = 0; i < intervals.Length; i++)
+            {
+                if(resultItem == null)
+                {
+                    resultItem = new int[2];
+                    resultItem[0] = intervals[i][0];
+                    resultItem[1] = intervals[i][1];
+                    if (resultItem[0] > newInterval[1])
+                    {
+                        if (!hasAdd)
+                        {
+                            result.Add(newInterval);
+                            hasAdd = true;
+                        }
+                        result.Add(resultItem);
+                        resultItem = null;
+                        continue;
+                    }
+                    if(resultItem[1] < newInterval[0])
+                    {
+                        result.Add(resultItem);
+                        resultItem = null;
+                        continue;
+                    }
+                    hasAdd = true;
+                    resultItem[0] = resultItem[0] < newInterval[0] ? resultItem[0] : newInterval[0];
+                    resultItem[1] = resultItem[1] > newInterval[1] ? resultItem[1] : newInterval[1];
+                }
+                else
+                {
+                    if(resultItem[1] >= intervals[i][0])
+                    {
+                        resultItem[1] = resultItem[1] > intervals[i][1] ? resultItem[1] : intervals[i][1];
+                    }
+                    else
+                    {
+                        result.Add(resultItem);
+                        resultItem = new int[2];
+                        resultItem[0] = intervals[i][0];
+                        resultItem[1] = intervals[i][1];
+                    }
+                }
+               
+            }
+            if(resultItem!= null)
+            {
+                result.Add(resultItem);
+            }
+            if (!hasAdd)
+            {
+                result.Add(newInterval);
+            }
+            return result.ToArray();
+        }
+        #endregion
+
+        #region 不同路径
+        public int UniquePaths(int m, int n)
+        {
+
+        }
         #endregion
     }
 }

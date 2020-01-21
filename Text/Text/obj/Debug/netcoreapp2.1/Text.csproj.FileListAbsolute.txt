@@ -20,3 +20,13 @@ F:\ruolinTang\Project\GitProject\Leetcode\Text\Text\obj\Debug\netcoreapp2.1\Text
 F:\ruolinTang\Project\GitProject\Leetcode\Text\Text\obj\Debug\netcoreapp2.1\Text.AssemblyInfo.cs
 F:\ruolinTang\Project\GitProject\Leetcode\Text\Text\obj\Debug\netcoreapp2.1\Text.dll
 F:\ruolinTang\Project\GitProject\Leetcode\Text\Text\obj\Debug\netcoreapp2.1\Text.pdb
+E:\git\Leetcode\Text\Text\bin\Debug\netcoreapp2.1\Text.deps.json
+E:\git\Leetcode\Text\Text\bin\Debug\netcoreapp2.1\Text.runtimeconfig.json
+E:\git\Leetcode\Text\Text\bin\Debug\netcoreapp2.1\Text.runtimeconfig.dev.json
+E:\git\Leetcode\Text\Text\bin\Debug\netcoreapp2.1\Text.dll
+E:\git\Leetcode\Text\Text\bin\Debug\netcoreapp2.1\Text.pdb
+E:\git\Leetcode\Text\Text\obj\Debug\netcoreapp2.1\Text.csprojAssemblyReference.cache
+E:\git\Leetcode\Text\Text\obj\Debug\netcoreapp2.1\Text.AssemblyInfoInputs.cache
+E:\git\Leetcode\Text\Text\obj\Debug\netcoreapp2.1\Text.AssemblyInfo.cs
+E:\git\Leetcode\Text\Text\obj\Debug\netcoreapp2.1\Text.dll
+E:\git\Leetcode\Text\Text\obj\Debug\netcoreapp2.1\Text.pdb
